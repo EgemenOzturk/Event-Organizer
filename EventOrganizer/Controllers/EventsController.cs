@@ -1,6 +1,8 @@
 ﻿
 using EventOrganizer.Data.Services;
+using EventOrganizer.Data.Static;
 using EventOrganizer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -8,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace EventOrganizer.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
+
     public class EventsController : Controller
     {
         private readonly IEventsService _service;
@@ -15,13 +19,13 @@ namespace EventOrganizer.Controllers
         {
             _service = service;
         }
-
+        [AllowAnonymous]
         public  async Task<IActionResult> Index()
         {
             var allEvents = await _service.GetAllAsync();
             return View(allEvents.OrderBy(n => n.EndDate));
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> Filter(string searchString)
         {
             var allEvents = await _service.GetAllAsync();

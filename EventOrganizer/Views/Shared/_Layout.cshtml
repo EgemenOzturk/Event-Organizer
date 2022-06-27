@@ -23,46 +23,35 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Events" asp-action="Index"> <i class="badgealert-info bi-film"></i>Events</a>
+                            <a class="nav-link text-dark" asp-controller="Events" asp-action="Index"> <i class="badgealert-danger bi-film"></i>Events</a>
                         </li>
                         
-                        <li class="nav-item dropdown">
+                        @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
-                            aria-haspopup="true" aria-expanded="false" >
-                            <i class="bi bi-gear"></i> Management
+                                aria-haspopup="true" aria-expanded="false" >
+                                <i class="bi bi-gear"></i> Management
                             </a>
-
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-controller="Events" asp-action="Index"> <i class= "bi-camera-reels"> </i> Events</a>
                             </div>
+                        </li>    
+                        }
 
-                        </li>
+                        
                     </ul>
 
                     <form class="form-inline my-2 my-lg-0" asp-controller="Events" asp-action="Filter" style="padding-right: 25px;">
                         <input name="searchString" type="text" class="form-control" placeholder="Search for an event...">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> <i class="badgealert-info bi-search"></i></button>
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"> <i class="badgealert-danger bi-search"></i></button>
                     </form>
 
                     <ul class="navbar-nav">
                         @await Component.InvokeAsync("ShoppingCartSummary")
                     </ul>
 
-                    @*User profile section*@
-                    <div class="dropdown">
-                        <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-toggle="dropdown"
-                            aria-expanded="false">
-                        <i class=bi bi-person-badge> </i> Hello User
-                    </button>
-                        <ul class="dropdown-menu" aria-labelledby="profile-btn">
-                            <li>
-                                <a class="dropdown-item" asp-controller="Orders" asp-action="Index">
-                                    <i class="bi bi-list"></i> Orders
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
+                    <partial name="_Identity.cshtml" />
                 </div>
             </div>
         </nav>
