@@ -31,7 +31,6 @@ namespace EventOrganizer.Data.Services
             await _context.Events.AddAsync(newEvent);
             await _context.SaveChangesAsync();
         }
-
         public async Task<Event> GetEventByIdAsync(int id)
         {
             return await _context.Events.FirstOrDefaultAsync(n => n.Id == id);
@@ -53,6 +52,12 @@ namespace EventOrganizer.Data.Services
                 dbEvent.Capacity = data.Capacity;
                 await _context.SaveChangesAsync();
             }
+            await _context.SaveChangesAsync();
+        }
+        public async Task DeleteEventAsync(int id)
+        {
+            var dbEvent = await _context.Events.FirstOrDefaultAsync(n => n.Id == id);
+            _context.Events.Remove(dbEvent);
             await _context.SaveChangesAsync();
         }
     }

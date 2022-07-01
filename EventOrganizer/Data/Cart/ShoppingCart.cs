@@ -73,8 +73,8 @@ namespace EventOrganizer.Data.Cart
         }
         public List<ShoppingCartItem> GetShoppingCartItems() 
         {
-            return ShoppingCartItems ?? (ShoppingCartItems = _context.ShoppingCartItems.Where
-                (n => n.ShoppingCartId == ShoppingCartId).Include(n => n.Event).ToList());
+            return ShoppingCartItems ?? (ShoppingCartItems = _context.ShoppingCartItems
+                .Where(n => n.ShoppingCartId == ShoppingCartId).Include(n => n.Event).ToList());
         }
 
         public double GetShoppingCartTotal() => _context.ShoppingCartItems.Where(n => n.ShoppingCartId ==

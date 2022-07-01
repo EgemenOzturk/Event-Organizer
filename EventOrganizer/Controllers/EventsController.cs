@@ -100,5 +100,38 @@ namespace EventOrganizer.Controllers
             await _service.UpdateEventAsync(Event);
             return RedirectToAction(nameof(Index));
         }
+
+        //GET: Events/Delete/1
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var eventDetails = await _service.GetEventByIdAsync(id);
+            if (eventDetails == null) return View("NotFound");
+
+            var response = new NewEventVM()
+            {
+                Id = eventDetails.Id,
+                Name = eventDetails.Name,
+                Description = eventDetails.Description,
+                Price = eventDetails.Price,
+                ImageURL = eventDetails.ImageURL,
+                EventCategory = eventDetails.EventCategory,
+                StartDate = eventDetails.StartDate,
+                EndDate = eventDetails.EndDate,
+                Capacity = eventDetails.Capacity
+            };
+
+            return View(response);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var eventDetails = await _service.GetEventByIdAsync(id);
+            if (eventDetails == null) return View("NotFound");
+
+            await _service.DeleteEventAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

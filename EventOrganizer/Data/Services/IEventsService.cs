@@ -10,5 +10,6 @@ namespace EventOrganizer.Data.Services
         Task<Event> GetEventByIdAsync(int id);
         Task AddNewEventAsync(NewEventVM data);
         Task UpdateEventAsync(NewEventVM data);
+        Task DeleteEventAsync(int id);
     }
 }
